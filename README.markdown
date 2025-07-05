@@ -120,32 +120,49 @@ API підтримує наступні ендпоінти для управлі
 
 ### Приклади запитів
 
-1. **Реєстрація користувача**:
+1. **Реєстрація користувача** (POST):
 
    ```cmd
    curl -H "Content-Type: application/json" -X POST http://localhost:8000/api/register/ -d "{\"username\":\"testuser\",\"password\":\"testpass123\",\"email\":\"testuser@ukr.net\"}"
    ```
 
-2. **Отримання JWT-токена**:
+2. **Отримання JWT-токена** (POST):
 
    ```cmd
    curl -X POST http://localhost:8000/api/token/ -d "username=root&password=maga123!@#"
    ```
+   
+3. **Перегляд списку подій** (GET з фільтрацією):
 
-3. **Створення події**:
+   ```cmd
+   curl -H "Authorization: Bearer <access_token>" http://localhost:8000/api/events/?title=Test
+   ```
+   
+4. **Створення події** (POST):
 
    ```cmd
    curl -H "Authorization: Bearer <access_token>" -H "Content-Type: application/json" -X POST http://localhost:8000/api/events/ -d "{\"title\":\"Test Event\",\"description\":\"Test description\",\"date\":\"2025-07-30T15:00:00Z\",\"location\":\"Kyiv\"}"
    ```
 
-4. **Фільтрація подій**:
+5. **Перегляд деталів події** (GET):
 
    ```cmd
-   curl -H "Authorization: Bearer <access_token>" http://localhost:8000/api/events/?title=Test
-   curl -H "Authorization: Bearer <access_token>" http://localhost:8000/api/events/?date__gte=2025-07-01T00:00:00Z&date__lte=2025-07-31T23:59:59Z
+   curl -H "Authorization: Bearer <access_token>" http://localhost:8000/api/events/1/
    ```
 
-5. **Реєстрація на подію** (відправляє email):
+6. **Оновлення події** (PUT):
+
+   ```cmd
+   curl -H "Authorization: Bearer <access_token>" -H "Content-Type: application/json" -X PUT http://localhost:8000/api/events/1/ -d "{\"title\":\"Updated Event\",\"description\":\"Updated description\",\"date\":\"2025-07-30T15:00:00Z\",\"location\":\"Kyiv\"}"
+   ```
+
+7. **Видалення події** (DELETE):
+
+   ```cmd
+   curl -H "Authorization: Bearer <access_token>" -X DELETE http://localhost:8000/api/events/1/
+   ```
+   
+8. **Реєстрація на подію** (POST, відправляє email):
    ```cmd
    curl -H "Authorization: Bearer <access_token>" -X POST http://localhost:8000/api/events/1/register/
    ```
